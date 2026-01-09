@@ -30,11 +30,40 @@ jobs:
         with:
           fetch-depth: 1
 
+      - name: Project Setup
+        run: |
+          npm setup
+          npm run dev:daemon
+
       - name: Run Claude Code
         id: claude
         uses: anthropics/claude-code-action@v1
         with:
           claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+
+          custom_instructions: |
+            The project is already set up with all dependencies installed.
+            The server is already running at localhost:3000. Logs from it
+            are being written to logs.txt. If needed, you can query 
+            the DB with the 'sqllite3' CLI. If needed, use the mpc_playwright
+            set of tools to launch a browser and interact with the app.
+          
+          mcp_config: |
+            {
+              "mcpServers": {
+                "playwright": {
+                  "command": "npx",
+                  "args": [
+                    "@playwright/mcp@latest",
+                    "--allowed-origins",
+                    "localhost:3000;cdn.tailwindcss.com;esm.sh"
+                  ]                  
+                  }
+                }
+              }
+            }
+          
+          allowed_tools: "Bash(npm:*),Bash(sqlite3:*),mcp__playwright_browser_snapshot,mcp__playwright_page,mcp__playwright_context,mcp__playwright_frame,mcp__playwright_element,mcp__playwright_action,mcp__playwright_event,mcp__playwright_screenshot,mcp__playwright_get_visible_text,mcp__playwright_get_visible_html,mcp__playwright_fill,mcp__playwright_click,mcp__playwright_navigate,mcp__playwright_wait_for_timeout,mcp__playwright_wait_for_selector,mcp__playwright_wait_for_function,mcp__playwright_wait_for_event,mcp__playwright_wait_for_navigation,mcp__playwright_wait_for_load_state,mcp__playwright_wait_for_timeout,mcp__playwright_wait_for_selector,mcp__playwright_wait_for_function,mcp__playwright_wait_for_event,mcp__playwright_wait_for_navigation,mcp__playwright_wait_for_load_state,mcp__playwright_browser_click,mcp__playwright_browser_type,mcp__playwright_browser_hover,mcp__playwright_browser_drag,mcp__playwright_browser_navigate,mcp__playwright_browser_close,mcp__playwright_browser_resize,mcp__playwright_browser_tabs,mcp__playwright_browser_navigate_back,mcp__playwright_browser_wait_for,mcp__playwright_browser_console_messages,mcp__playwright_browser_network_requests,mcp__playwright_browser_take_screenshot"
 
           # This is an optional setting that allows Claude to read CI results on PRs
           additional_permissions: |

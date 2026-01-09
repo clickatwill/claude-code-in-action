@@ -1,0 +1,31 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__playwright",
+      "Bash(git add:*)",
+      "Bash(git commit -m \"$\\(cat <<''EOF''\nAdd CLAUDE.md with project guidance for Claude Code\n\nDocuments commands, architecture overview, core data flow,\nkey files, and database schema reference.\n\nCo-Authored-By: Claude Opus 4.5 <noreply@anthropic.com>\nEOF\n\\)\")",
+      "Bash(git push:*)",
+      "Bash(git commit:*)",
+      "Bash(npx vitest:*)",
+      "Bash(npm audit:*)",
+      "Bash(npm test)",
+      "Bash(npm info:*)",
+      "Bash(npm install:*)",
+      "Bash(node:*)",
+      "Bash(npm run build:*)",
+      "Bash(npm run lint)",
+      "Bash(npm uninstall:*)",
+      "Bash(npm test:*)",
+      "Bash(npm ls:*)",
+      "Bash(git reset:*)",
+      "mcp__playwright__playwright_navigate",
+      "mcp__playwright__playwright_screenshot",
+      "mcp__playwright__playwright_get_visible_text",
+      "mcp__playwright__playwright_get_visible_html",
+      "mcp__playwright__playwright_fill",
+      "mcp__playwright__playwright_click",
+      "Bash(timeout:*)",
+      "Bash(ping:*)"
+    ]
+  }
+}
